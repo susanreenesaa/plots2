@@ -207,10 +207,6 @@ class Tag < ApplicationRecord
   # OPTIMIZE: this too!
   def weekly_tallies(type = 'note', span = 52)
     weeks = {}
-    tids = Tag.where('name IN (?)', [name])
-              .collect(&:tid)
-    nids = NodeTag.where('tid IN (?)', tids)
-                                 .collect(&:nid)
     (1..span).each do |week|
       weeks[span - week] = Tag.nodes_for_period(
         type,
